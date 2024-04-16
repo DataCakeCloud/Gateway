@@ -1,0 +1,31 @@
+supports:
+  - spark
+  - spark_sql
+  - pyspark
+  - script
+  - tfjob
+clusters:
+  # aws美东通用：
+  - id: cluster_id
+    name: cluster_name
+    provider: aws
+    region: ue1
+    master: k8s://https://xxx
+    namespace: bdp
+    priority: 10
+    max_usage: 0.7
+    scalable: true
+    need_account:
+    instances:
+      - instance_type: m5.2xlarge
+        allocatable_cpu: 6000m
+        allocatable_memory: 29360128Ki
+        max_num: 1200
+    tags:
+      - type:k8s
+      - sla:normal
+      - provider:aws
+      - region:us-east-1
+    active_commands:
+      - spark-submit
+      - kubernetesPodOperator

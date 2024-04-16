@@ -1,0 +1,17 @@
+supports:
+  - flink
+clusters:
+  - id: yarn-aws
+    name: yarn-aws
+    provider: aws
+    region: us-east-1
+    master: yarn
+    tags:
+      - type:yarn
+      - sla:normal
+      - rbac.cluster:bdp-prod
+      - name:yarn-aws
+      - provider:aws
+      - region:us-east-1
+    active_commands:
+      - flink-1.14.6

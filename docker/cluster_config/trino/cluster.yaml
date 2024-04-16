@@ -1,0 +1,13 @@
+supports:
+  - trino
+clusters:
+  - id: huawei
+    name: huawei
+    provider: huawei
+    region: sg2
+    master: https://xxx
+    catalog: hive
+    tags:
+      - name:huawei
+      - provider:huaweicloud
+      - region:ap-southeast-3

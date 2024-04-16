@@ -1,0 +1,10 @@
+commands:
+  - id: flink-1.14.6
+    name: flink-1.14.6
+    version: 1.14.6
+    command: flink-1.14.6
+    tags:
+      - type:flink
+      - version:1.14.6
+    active_clusters:
+      - yarn-aws

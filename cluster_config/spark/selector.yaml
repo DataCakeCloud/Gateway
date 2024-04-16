@@ -1,0 +1,7 @@
+selectors:
+  - name: priority
+    class: org.apache.kyuubi.cluster.selector.PriorityClusterSelector
+  - name: usage
+    class: org.apache.kyuubi.cluster.selector.UsageClusterSelector
+  - name: random
+    class: org.apache.kyuubi.cluster.selector.RandomClusterSelector

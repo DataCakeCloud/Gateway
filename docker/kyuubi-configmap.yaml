@@ -1,0 +1,118 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Usage:
+#   DEMO:
+#     kubectl apply -f https://raw.githubusercontent.com/apache/kyuubi/master/docker/kyuubi-configmap.yaml
+#   LOCAL:
+#     kubectl create cm kyuubi-defaults --from-file=${KYUUBI_HOME}/conf/kyuubi-defaults.conf
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kyuubi-defaults
+data:
+  kyuubi-defaults.conf: |
+    #
+    # Licensed to the Apache Software Foundation (ASF) under one or more
+    # contributor license agreements.  See the NOTICE file distributed with
+    # this work for additional information regarding copyright ownership.
+    # The ASF licenses this file to You under the Apache License, Version 2.0
+    # (the "License"); you may not use this file except in compliance with
+    # the License.  You may obtain a copy of the License at
+    #
+    #    http://www.apache.org/licenses/LICENSE-2.0
+    #
+    # Unless required by applicable law or agreed to in writing, software
+    # distributed under the License is distributed on an "AS IS" BASIS,
+    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    # See the License for the specific language governing permissions and
+    # limitations under the License.
+    #
+
+    ## Kyuubi Configurations
+    kyuubi.authentication                           NOSASL
+    #kyuubi.frontend.bind.host                      localhost
+    kyuubi.frontend.bind.port                       10009
+    #kyuubi.frontend.rest.bind.host                 localhost
+    kyuubi.frontend.rest.bind.port                  10099
+    #kyuubi.frontend.trino.bind.host                localhost
+    kyuubi.frontend.trino.bind.port                 10999
+
+    # Details in https://kyuubi.readthedocs.io/en/master/deployment/settings.html
+
+    kyuubi.frontend.connection.url.use.hostname     false
+    kyuubi.operation.progress.enabled               true
+    kyuubi.session.engine.spark.showProgress        true
+
+    #kyuubi.ha.zookeeper.quorum                     zk-0.zk-hs.bdp.svc.cluster.local,zk-1.zk-hs.bdp.svc.cluster.local,zk-2.zk-hs.bdp.svc.cluster.local
+    kyuubi.ha.zookeeper.quorum                      test.gateway.bdp.ue1.zk:2181
+    # prod zk
+    #kyuubi.ha.zookeeper.quorum                     prod.gateway.bdp.ue1.zk:2181
+    #kyuubi.ha.zookeeper.quorum                     prod.gateway.bdp.sg1.zk:2181
+    kyuubi.ha.zookeeper.namespace                   kyuubi
+    kyuubi.ha.zookeeper.engine.secure.secret.node   /secret
+    kyuubi.engine.security.enabled                  true
+    kyuubi.frontend.protocols                       THRIFT_BINARY,THRIFT_HTTP,REST,MYSQL,TRINO
+    kyuubi.backend.server.exec.pool.size            400
+    kyuubi.session.engine.initialize.timeout        PT10M
+    #kyuubi.batch.application.check.interval        PT30S
+    kyuubi.metadata.max.age                         P180D
+    kyuubi.engine.share.level                       CONNECTION
+    kyuubi.cluster.config.path                      /opt/kyuubi/cluster_config
+    kyuubi.session.select.cluster.dynamic           true
+    
+    #kyuubi.engine.type                             trino
+    #kyuubi.session.engine.trino.connection.url     https://trino-ue1-prod.ushareit.org:443/hive/default
+    #kyuubi.session.engine.trino.connection.catalog hive
+    #
+    # test
+    kyuubi.metadata.store.jdbc.database.type        MYSQL
+    kyuubi.metadata.store.jdbc.driver               com.mysql.jdbc.Driver
+    kyuubi.metadata.store.jdbc.url                  jdbc:mysql://test.datacake-cloud.bdp.sg1.mysql/gateway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    kyuubi.metadata.store.jdbc.user                 gateway
+    kyuubi.metadata.store.jdbc.password             yo3x5J~HYAwa4kMqVh$O^sFUf_+Dcj
+    
+    # prod
+    #kyuubi.metadata.store.jdbc.database.type       MYSQL
+    #kyuubi.metadata.store.jdbc.driver              com.mysql.jdbc.Driver
+    #kyuubi.metadata.store.jdbc.url                 jdbc:mysql://prod.datacake-cloud.bdp.sg1.mysql/gateway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    #kyuubi.metadata.store.jdbc.user                gateway
+    #kyuubi.metadata.store.jdbc.password            QszImjRb!OiX3^9t
+    # readonly domain: prod.datacake-cloud-ro.bdp.sg1.mysql	
+    
+    kyuubi.metrics.reporters                        PROMETHEUS
+    kyuubi.metrics.prometheus.path                  /metrics
+    kyuubi.metrics.prometheus.port                  10019
+    #
+    #
+    #
+    # spark config
+    spark.submit.deployMode                             cluster
+    spark.kubernetes.submission.waitAppCompletion       false
+    #
+    #
+    # lakecat
+    lakecat.client.host                                 lakecat-catalog.datacake.cloud
+    lakecat.client.port                                 80
+    lakecat.client.token                                rO0ABXNyADJpby5sYWtlY2F0LmNhdGFsb2cuYXV0aGVudGljYXRpb24ubW9kZWwuTG9jYWxUb2tlbjcmbiYxJvNvAgADTAAJYWNjb3VudElkdAASTGphdmEvbGFuZy9TdHJpbmc7TAAGcGFzc3dkcQB+AAFMAAZ1c2VySWRxAH4AAXhwdAAHdGVuYW50QXQAA2JkcHQAA2JkcA==
+    clustermanager.checkpath.url                        https://cluster-manager.datacake.cloud/cluster-service/cloud/data/checkpath
+    
+    # ks3
+    kyuubi.ks3.endpoint                                 ks3-cn-beijing.ksyuncs.com
+    kyuubi.ks3.accessKey                                AKLT0uiDgZeFSGG0OyJqEd8F
+    kyuubi.ks3.secretKey                                OBMkSfNf2Mjt0woCR5i3HhQ3VeumGxYFjLv7gGoH

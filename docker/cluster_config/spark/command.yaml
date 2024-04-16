@@ -1,0 +1,26 @@
+commands:
+  - id: spark-submit
+    name: spark-aws-3.2
+    version: 3.2.2.4
+    command: spark-aws-3.2
+    tags:
+      - type:spark-submit-sql-ds
+    conf:
+      - spark.kubernetes.container.image=xxx
+      - spark.dynamicAllocation.executorAllocationRatio=0.5
+      - spark.kubernetes.driverEnv.spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.claimName=OnDemand
+      - spark.kubernetes.driverEnv.spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.storageClass=gp2
+      - spark.kubernetes.driverEnv.spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.sizeLimit=100Gi
+      - spark.kubernetes.driverEnv.spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.path=/tmp/data
+      - spark.kubernetes.driverEnv.spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.readOnly=false
+      - spark.kubernetes.driverEnv.spark.kubernetes.driver.reusePersistentVolumeClaim=true
+      - spark.kubernetes.driverEnv.spark.kubernetes.driver.ownPersistentVolumeClaim=true
+      - spark.kubernetes.driverEnv.spark.shuffle.sort.io.plugin.class=org.apache.spark.shuffle.KubernetesLocalDiskShuffleDataIO
+      - spark.executorEnv.spark.shuffle.sort.io.plugin.class=org.apache.spark.shuffle.KubernetesLocalDiskShuffleDataIO
+      - spark.executorEnv.spark.kubernetes.driver.reusePersistentVolumeClaim=true
+      - spark.executorEnv.SPARK_EXECUTOR_DIRS=/tmp/data
+      - spark.shuffle.io.maxRetries=1
+      - spark.stage.maxConsecutiveAttempts=6
+      - spark.kubernetes.allocation.maxPendingPods=50
+    active_clusters:
+      - cluster_id

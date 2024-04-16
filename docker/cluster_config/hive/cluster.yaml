@@ -1,0 +1,13 @@
+supports:
+  - hive
+  - jdbc
+clusters:
+  - id: aws-ue1
+    name: aws-ue1
+    provider: aws
+    region: us-east-1
+    master: jdbc:hive2://xxx:10002
+    catalog: hive
+    tags:
+      - provider:aws
+      - region:us-east-1

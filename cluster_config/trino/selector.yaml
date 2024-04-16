@@ -1,0 +1,3 @@
+selectors:
+  - name: random
+    class: org.apache.kyuubi.cluster.selector.RandomClusterSelector

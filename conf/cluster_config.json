@@ -1,0 +1,25 @@
+{
+  "node_selector": {
+    "project": "kubeflow"
+  },
+  "env": [
+    {
+    "name": "ZK_ADDR",
+    "value": "zfs://xdl-zk-0.xdl-zk-hs.kubedl.svc.cluster.local:2181,xdl-zk-1.xdl-zk-hs.kubedl.svc.cluster.local:2181,xdl-zk-2.xdl-zk-hs.kubedl.svc.cluster.local:2181/xdl/"
+    }
+  ],
+  "label": {
+    "group": "sprs",
+    "app": "tf-operator",
+    "env": "prod"
+  },
+  "tolerations": [
+    {
+    "key": "project",
+    "value": "kubeflow",
+    "operator": "Equal",
+    "effect": "NoExecute"
+    }
+  ],
+  "namespace": "kubeflow"
+}
